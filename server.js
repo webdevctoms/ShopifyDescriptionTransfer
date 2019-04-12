@@ -30,7 +30,15 @@ function runServer(port = PORT){
 	.then(sum => {
 		console.log("then the sum is ",sum);
 		sum += 1;
-		return sum;
+		//return promise so that we can chain thens but wait for async action
+		return new Promise((resolve,reject)=> {
+			StartCallCAD(function(data){
+				console.log("the data is: ",data);
+				resolve(sum);
+			});
+		});
+		
+		
 	})
 	.then(sum => {
 		console.log("new sum ",sum);

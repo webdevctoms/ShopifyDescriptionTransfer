@@ -17,7 +17,7 @@ function StartCallCAD(callback){
 	request(options,function(error,response,body){
 		const parsedBody = JSON.parse(body);
 
-		console.log(parsedBody);
+		console.log("parsedBody");
 		return callback("it worked");
 	});
 }
