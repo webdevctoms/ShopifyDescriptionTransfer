@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const {PORT} = require('./config');
+const {StartCallCAD} = require('./ShopifyCalls/getCADData');
 const app = express();
 
 let server;
@@ -13,7 +14,11 @@ function runServer(port = PORT){
 			let num1 = 5;
 			let num2 = 6;
 			let sum = 5 + 6;
-			resolve(sum);
+			StartCallCAD(function(data){
+				console.log("the data is: ",data);
+				resolve(sum);
+			});
+			
 			
 		})
 		
@@ -21,6 +26,7 @@ function runServer(port = PORT){
 			reject(err);
 		})
 	})
+	//use these to pass data to the next function(s)
 	.then(sum => {
 		console.log("then the sum is ",sum);
 		sum += 1;
