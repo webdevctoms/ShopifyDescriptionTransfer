@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const {StartCallCAD} = require('../ShopifyCalls/getCADData');
+const {checkKey} = require('../tools/checkKey');
 const fs = require('fs');
 
-router.get("/CAD",(req,res) => {
+router.get("/CAD",checkKey,(req,res) => {
 	let num1 = 5;
 	let num2 = 1;
 	let sum = num1 + num2;
@@ -27,7 +28,7 @@ router.get("/CAD",(req,res) => {
 				]
 			};
 			let stringData = JSON.stringify(testObj);
-			fs.writeFile('../data/testData.json',stringData,'utf-8',function(err,data){
+			fs.writeFile('./data/testData.json',stringData,'utf-8',function(err,data){
 				if(err){
 					reject(err);
 				}
@@ -56,7 +57,7 @@ router.get("/CAD",(req,res) => {
 					body_html:"yup"
 				});
 				console.log("new data: ",obj.products[2]);
-				res.status(201).json({data:"yup"});
+				res.status(201).json({data:"Added",status:201});
 			}
 
 			
