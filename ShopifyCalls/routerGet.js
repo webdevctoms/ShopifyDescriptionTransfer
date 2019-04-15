@@ -27,9 +27,15 @@ router.get("/CAD",(req,res) => {
 				]
 			};
 			let stringData = JSON.stringify(testObj);
-			fs.writeFile('./data/testData.json',stringData,'utf-8',function(err,data){
-				console.log("writing file");
-				resolve(testObj.products.length);
+			fs.writeFile('../data/testData.json',stringData,'utf-8',function(err,data){
+				if(err){
+					reject(err);
+				}
+				else{
+					console.log("writing file");
+					resolve(testObj.products.length);
+				}
+				
 			});
 			
 		})
@@ -56,6 +62,11 @@ router.get("/CAD",(req,res) => {
 			
 		});
 		
+	})
+
+	.catch(err => {
+		console.log(err);
+		res.status(500).json({data:err});
 	})
 });
 
