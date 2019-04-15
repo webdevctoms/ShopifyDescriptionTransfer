@@ -4,7 +4,7 @@ const {URLCAD,USERK,USERP} = require("../config");
 
 //callback to return data in original function,callback passed in original file calling it
 //have to nest the function inorder to pass callback
-function StartCallCAD(callback){
+function StartCallCAD(){
 	var promise = new Promise((resolve,reject) => {
 		const authKey = Buffer.from(USERK + ":" + USERP).toString('base64');
 		const options = {
