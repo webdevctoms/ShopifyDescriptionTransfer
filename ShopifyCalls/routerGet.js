@@ -12,8 +12,10 @@ router.get("/CAD",checkKey,(req,res) => {
 	return StartCallCAD()
 
 	//will need function to check the data with current data to not add duplicates
+	//data will now be array of arrays consisting of the number of items returned 
+	//from each request
 	.then(data => {
-
+		console.log("shopify data: ",data[1].length);
 		return new Promise((resolve,reject) => {
 			let testObj = {
 				products:[
