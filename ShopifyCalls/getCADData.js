@@ -14,7 +14,7 @@ function StartCallCAD(dataArray,lastId){
 	}
 
 	var promise = new Promise((resolve,reject) => {
-		let newUrl = URLCAD + "products.json?" + "limit=250&fields=id,body_html,title"
+		let newUrl = URLCAD + "products.json?" + "limit=250&fields=id,body_html,title,variants"
 		if(lastId !== undefined){
 			newUrl += "&since_id=" + lastId;
 		}
@@ -30,7 +30,20 @@ function StartCallCAD(dataArray,lastId){
 			const parsedBody = JSON.parse(body);
 			console.log("products data length: ",parsedBody.products.length);
 			if(parsedBody.products.length !== 0){
-				dataArray.push(parsedBody.products);
+				let newData = [];
+				for(let i = 0;i < parsedBody.products.length;i++){
+					let currentProduct = parsedBody.products[i];
+					let currentObject = {};
+					currentObject.id = currentProduct.id
+					currentObject.body_html = currentProduct.body_html
+					currentObject.title = currentProduct.title
+
+					if(currentProduct.variants.length > 0){
+						currentObject.sku = currentProduct.variants[0].sku;
+					}
+					newData.push(currentObject);
+				}
+				dataArray.push(newData);
 				let lastId = parsedBody.products[parsedBody.products.length - 1].id;
 				resolve(StartCallCAD(dataArray,lastId));
 			}
